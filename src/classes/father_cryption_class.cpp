@@ -2,7 +2,7 @@
 
 //класс созднан как образец функций которые должны быть воплащены в программе шифрование 
 class super_encryption{
-    virtual void сaesar(char* message);
+    virtual void caesar(char* message);
     virtual void affine(char* message);
     virtual void vigener(char* message);
     virtual void playfair(char* message);
@@ -11,7 +11,7 @@ class super_encryption{
 
 //класс созднан как образец функций которые должны быть воплащены в программе расшифровки
 class super_decryption{
-    virtual void сaesar(char* message);
+    virtual void caesar(char* message);
     virtual void affine(char* message);
     virtual void vigener(char* message);
     virtual void playfair(char* message);
@@ -27,10 +27,13 @@ class super_act_user{
             std::string username,
             std::string password
         );
+        std::vector<std::string> encpyte(std::string patern);
     private:
         std::string login;
         std::string username;
         std::string password;
+
+        std::string crypt_patern;
 };
 super_act_user::super_act_user(std::string get_login, std::string get_username, std::string get_password){
     login = get_login;
