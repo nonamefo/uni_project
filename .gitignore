@@ -1,0 +1,16 @@
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+main
+*.exe
+*.bin
+*.dir
+*.o
+*.so
+*.a
+*.exe
+*.pdb
+build/
+tmp/
+*.log
