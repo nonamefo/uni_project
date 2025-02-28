@@ -1,4 +1,5 @@
-#include "../project_libs.h"
+#include <string>
+#include <vector>
 
 //класс созднан как образец функций которые должны быть воплащены в программе шифрование 
 class super_encryption{

@@ -1,5 +1,6 @@
-#include "project_libs.h"
+#include "./libs/Json.hpp"
 
 int main(){
-    std::cout << "Hallo";
+     
+    json js = json();
 }

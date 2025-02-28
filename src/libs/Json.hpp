@@ -1,5 +1,9 @@
-#include "project_libs.h"
-
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <map>
+#include <regex>
 
 class json{
     public:
@@ -17,6 +21,7 @@ class json{
 
 json::json(){}
 json::json(std::string f_name){
+
     // открытие файла
     std::ifstream in(f_name);
     // проверка открытия
