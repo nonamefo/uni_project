@@ -8,4 +8,5 @@ int main(){
     std::string get_login, get_password, get_username;
 
     act_user user = act_user();
+    user.analis();
 }
