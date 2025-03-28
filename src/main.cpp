@@ -1,4 +1,5 @@
 #include "user/users.cpp"
+#include "crypto/crypto.cpp"
 
 int main(){
     #ifdef _WIN32
