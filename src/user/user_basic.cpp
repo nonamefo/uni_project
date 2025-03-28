@@ -1,5 +1,6 @@
 #include "../project_libs.hpp"
 
+
 // класс поведения пользователя что на что он способен и т.д.
 class super_act_user{
     public:
@@ -55,11 +56,11 @@ void super_act_user::send_message(std::string msg, int status){
 
 std::string super_act_user::get_curent_dir() {
     try {
-      fs::path path = fs::current_path();
-      return path.string();
-    } catch (const fs::filesystem_error& e) {
-      std::cerr << "Error getting working directory: " << e.what() << std::endl;
-      return "";
+        std::filesystem::path path = std::filesystem::current_path(); // Явное указание
+        return path.string();
+    } catch (const std::filesystem::filesystem_error& e) { // Явное указание
+        std::cerr << "Error getting working directory: " << e.what() << std::endl;
+        return "";
     }
 }
 
