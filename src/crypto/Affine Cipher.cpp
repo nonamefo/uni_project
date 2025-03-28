@@ -46,5 +46,6 @@ class affine_cipher : public basic_cripto {
     
         int getB() const {
             return b;
+       
         }
     }; 
