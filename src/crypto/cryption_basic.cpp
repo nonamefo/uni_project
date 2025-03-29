@@ -2,6 +2,6 @@
 
 
 class basic_cripto{
-    virtual std::string decode();
-    virtual std::string encode();
+    virtual std::string decode() = 0;
+    virtual std::string encode() = 0;
 };

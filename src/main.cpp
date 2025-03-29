@@ -1,7 +1,8 @@
 #include "user/users.cpp"
-#include "crypto/crypto.cpp"
+#include "crypto/cryption_basic.cpp"
 
 int main(){
+    
     #ifdef _WIN32
     SetConsoleCP(CP_UTF8);
     SetConsoleOutputCP(CP_UTF8);
