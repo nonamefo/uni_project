@@ -1,5 +1,5 @@
 #include "../project_libs.hpp"
-#include "cryption_basic.cpp"
+#include "basic_cripto.cpp"
 
 class affine_cipher : public basic_cripto {
     private:

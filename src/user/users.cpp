@@ -9,7 +9,9 @@ class act_user : public super_act_user {
         act_user() : super_act_user() {}
         std::string get_info();
         void analis();
+        void crypt();
 };
+
 
 void act_user::analis(){
     std::string msg;
@@ -18,7 +20,7 @@ void act_user::analis(){
 
     if(info[0] == '1'){
         this->flag_crypt_or_encrypt = true;
-        
+        this->crypt();
     }   else if (info[0] == '2')    {
         this->flag_crypt_or_encrypt = false;
     }   else if (info[0] == '3'){
@@ -36,4 +38,10 @@ std::string act_user::get_info(){
     std::string info;
     std::cin >> info;
     return info;
+}
+
+void act_user::crypt(){
+    json js = json();
+    js.Parse("list_algorims.json");
+    js.cout_json();
 }
