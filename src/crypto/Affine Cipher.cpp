@@ -1,4 +1,4 @@
-#include "basic_cripto.cpp"
+// #include "basic_cripto.h"
 
 class affine_cipher : public basic_cripto {
     private:
@@ -19,7 +19,7 @@ class affine_cipher : public basic_cripto {
             }
         }
     
-        std::string encode(const std::string& message)  {
+        std::string encode(const std::string& message) override {
             std::string encrypted = message;
             for (char& c : encrypted) {
                 if (isalpha(c)) {
@@ -30,7 +30,7 @@ class affine_cipher : public basic_cripto {
             return encrypted;
         }
     
-        std::string decode(const std::string& encryptedMessage)  {
+        std::string decode(const std::string& encryptedMessage) override {
             std::string decrypted = encryptedMessage;
             int aInv = modInverse(a, 26);
             for (char& c : decrypted) {

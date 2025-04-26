@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <memory>
 #include <cctype>
+#include <algorithm>
 
 #include <filesystem>
 

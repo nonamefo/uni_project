@@ -6,10 +6,10 @@ set(CMAKE_CXX_COMPILER "g++")
 project(main)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Список ресурсов для копирования
-set(RESOURCES ../src/crypto/list_algoritms.json)
+# # Список ресурсов для копирования
+# set(RESOURCES ../src/crypto/list_algoritms.json)
 
 file(GLOB_RECURSE SOURCE_FILES
   src/main.cpp
