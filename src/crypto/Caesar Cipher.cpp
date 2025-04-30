@@ -1,3 +1,6 @@
+// #include "basic_cripto.h"
+
+
 class caesar_cipher : public basic_cripto {
     private:
         int shift; // Параметр сдвига

@@ -1,3 +1,5 @@
+// #include "basic_cripto.h"
+
 class affine_cipher : public basic_cripto {
     private:
         int a, b;

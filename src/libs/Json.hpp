@@ -11,18 +11,18 @@ class json{
         json();
         json(std::string f_name);
         void Parse(std::string f_name);
-        std::vector<std::string> get_keys();
+        std::vector<char> get_keys();
+        void cout_json();
         bool f_status;
-        std::string operator[](std::string index);
+        std::string operator[](char index);
         
     private:
-        std::vector<std::string> array_keys;
-        std::map<std::string, std::string> id_crypto_dict;
+        std::vector<char> array_keys;
+        std::map<char, std::string> id_crypto_dict;
 };
 
 json::json(){}
 json::json(std::string f_name){
-
     // открытие файла
     std::ifstream in(f_name);
     // проверка открытия
@@ -52,7 +52,7 @@ json::json(std::string f_name){
 
         // создание словоря со всеми id и названием
         // переменные которые используються для создания словаря
-        std::string key;
+        char key;
         std::string value;
         bool flag = 1;
 
@@ -70,25 +70,25 @@ json::json(std::string f_name){
                     value+=text_splited[i];
                 }
             } else {
-                array_keys.push_back(key);
                 // добавление данных в словарь
-                id_crypto_dict[key] = value;
+                array_keys.push_back(key);
+                this->id_crypto_dict[key] = value;
                 // отладочная информация
                 // std::cout << id_crypto_dict[key]<<std::endl;
 
 
                 // обнуление пере новым цыклом
-                key = "";
+                key = '0';
                 value = "";
                 flag = !flag;
             }
         }
         // завершение цыкла и добавление финальной информации
-        // добавление последниих элементов
+        // добавление последних элементов
         array_keys.push_back(key);
-        id_crypto_dict[key] = value;
+        this->id_crypto_dict[key] = value;
 
-        key = "";
+        key = '0';
         value = "";
     }   else    {
         this->f_status = 0;
@@ -96,6 +96,7 @@ json::json(std::string f_name){
     }
     in.close();
 }
+
 void json::Parse(std::string f_name){
     // открытие файла
     std::ifstream in(f_name);
@@ -126,7 +127,7 @@ void json::Parse(std::string f_name){
 
         // создание словоря со всеми id и названием
         // переменные которые используються для создания словаря
-        std::string key;
+        char key;
         std::string value;
         bool flag = 1;
 
@@ -152,7 +153,7 @@ void json::Parse(std::string f_name){
 
 
                 // обнуление пере новым цыклом
-                key = "";
+                key = '0';
                 value = "";
                 flag = !flag;
             }
@@ -162,7 +163,7 @@ void json::Parse(std::string f_name){
         array_keys.push_back(key);
         this->id_crypto_dict[key] = value;
 
-        key = "";
+        key = '0';
         value = "";
     }   else    {
         this->f_status = 0;
@@ -171,10 +172,16 @@ void json::Parse(std::string f_name){
     in.close();
 }
 
-std::vector<std::string> json::get_keys(){
+std::vector<char> json::get_keys(){
     return this->array_keys;
 }
 
-std::string json::operator[](std::string index){
+std::string json::operator[](char index){
     return id_crypto_dict[index];
+}
+
+void json::cout_json(){
+    for(char key : this->array_keys){
+        std::cout << key << this->id_crypto_dict[key] << std::endl;
+    }
 }
