@@ -5,13 +5,16 @@
 class super_act_user{
     public:
         super_act_user();
+        super_act_user(std::string);
         
         std::string get_curent_dir();
         std::string setTextColor(const std::string& text, const std::string& colorCode);
-        void send_message(std::string msg, int status);
+        void send_message(std::string msg, char status);
         int get_info();
 
-        bool flag_crypt_or_encrypt; 
+        void linux_base_terminal();
+
+        bool flag_crypt_or_encrypt = false; 
 
     private:
         std::string login;
@@ -31,27 +34,25 @@ super_act_user::super_act_user(){
                             "#                                   P.S.                        #\n"
                             "#                                     Над проектом работали:    #\n"
                             "#                                         nonamefo  MstShuher   #\n"
-                            "#################################################################\n"
-                            "                                                                 \n"
-                            "                                                                 \n"
-                            "         1 - зашифровать данные                                  \n"
-                            "         2 - расшифровать данные                                 \n"
-                            "         3 - вЫхОд                                               \n";
+                            "#################################################################\n";
 
     this->send_message(message, 1);
 };
 
-void super_act_user::send_message(std::string msg, int status){
-    if (status){
-        std::cout << msg << std::endl;
-    }   else    {
-        std::cout << setTextColor(msg, "31") <<std::endl;
-    }
-    std::string dir = get_curent_dir();
 
-    std::cout << "┌──(user@user)-[" << dir << "]" << std::endl;
-    std::cout << "└─$";
-    
+super_act_user::super_act_user(std::string message){
+    this->send_message(message, 1);
+}
+void super_act_user::send_message(std::string msg, char status){
+    if (status == 1){
+        std::cout << msg << std::endl;
+    }
+    else if (status == 2){
+        std::cout << msg;
+    }
+     else    {
+        std::cout << setTextColor(msg, "31") <<std::endl;
+    }    
 } 
 
 std::string super_act_user::get_curent_dir() {
@@ -67,4 +68,11 @@ std::string super_act_user::get_curent_dir() {
 
 std::string super_act_user::setTextColor(const std::string& text, const std::string& colorCode) {
     return "\033[" + colorCode + "m" + text + "\033[0m"; // \033[0m сбрасывает цвет
+}
+
+void super_act_user::linux_base_terminal(){
+    std::string dir = get_curent_dir();
+
+    std::cout << "┌──(user@user)-[" << dir << "]" << std::endl;
+    std::cout << "└─$";
 }
