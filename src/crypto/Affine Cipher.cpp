@@ -3,6 +3,7 @@
 
 #include "../project_libs.hpp"
 #include "basic_cripto.h"
+#include "key_storage.h" // Используем ваше хранилище ключей
 
 class affine_cipher : public basic_cripto {
 private:
@@ -68,11 +69,37 @@ public:
             }
             b = b_value % modSize;
         }
+        
+        // Сохраняем сгенерированный ключ в хранилище
+        KeyStorage::getInstance()->setAffineKey(get_key());
+    }
+
+    // Получение текущего ключа в виде строки
+    std::string get_key() const {
+        return "a=" + std::to_string(a) + ",b=" + std::to_string(b);
+    }
+    
+    // Установка ключа из строки
+    bool set_key(const std::string& key) {
+        size_t aPos = key.find("a=");
+        size_t bPos = key.find(",b=");
+        
+        if (aPos != std::string::npos && bPos != std::string::npos) {
+            int new_a = std::stoi(key.substr(aPos + 2, bPos - aPos - 2));
+            int new_b = std::stoi(key.substr(bPos + 3));
+            
+            // Проверяем, что a взаимно просто с modSize
+            if (std::gcd(new_a, modSize) == 1) {
+                a = new_a;
+                b = new_b % modSize;
+                return true;
+            }
+        }
+        return false;
     }
 
     std::string encode(const std::string message) override {
         std::string encrypted;
-        std::string key = "a=" + std::to_string(a) + ",b=" + std::to_string(b);
         
         for (char c : message) {
             int idx = getIndex(c);
@@ -86,30 +113,25 @@ public:
             }
         }
         
-        return encrypted + "\nKEY:" + key;
+        // Сохраняем текущий ключ в хранилище
+        KeyStorage::getInstance()->setAffineKey(get_key());
+        
+        return encrypted;
     }
 
-    std::string decode(const std::string encryptedMessage) override {
-        // Разделяем сообщение и ключ
-        size_t keyPos = encryptedMessage.find("\nKEY:");
-        std::string message = encryptedMessage;
+    std::string decode(const std::string message) override {
+        // Проверяем наличие ключа в хранилище
+        std::string stored_key = KeyStorage::getInstance()->getAffineKey();
+        if (stored_key.empty()) {
+            throw std::runtime_error("Ошибка: Отсутствует ключ для аффинного шифра. Расшифровка невозможна.");
+        }
         
-        if (keyPos != std::string::npos) {
-            message = encryptedMessage.substr(0, keyPos);
-            std::string keyPart = encryptedMessage.substr(keyPos + 5);
-            
-            // Парсим ключ
-            size_t aPos = keyPart.find("a=");
-            size_t bPos = keyPart.find(",b=");
-            
-            if (aPos != std::string::npos && bPos != std::string::npos) {
-                a = std::stoi(keyPart.substr(aPos + 2, bPos - aPos - 2));
-                b = std::stoi(keyPart.substr(bPos + 3));
-            }
+        // Устанавливаем ключ из хранилища
+        if (!set_key(stored_key)) {
+            throw std::runtime_error("Ошибка: Неверный формат ключа для аффинного шифра.");
         }
         
         std::string decrypted;
-        std::string key = "a=" + std::to_string(a) + ",b=" + std::to_string(b);
         int aInv = modInverse(a, modSize);
         
         for (char c : message) {
@@ -124,70 +146,51 @@ public:
             }
         }
         
-        return decrypted + "\nKEY:" + key;
+        return decrypted;
+    }
+    
+    // Метод шифрования с явным указанием ключа
+    std::pair<std::string, std::string> encode_with_key(const std::string message) override {
+        // Сохраняем текущий ключ перед шифрованием
+        std::string key = get_key();
+        
+        // Шифруем сообщение
+        std::string encrypted = encode(message);
+        
+        return {encrypted, key};
+    }
+    
+    // Метод дешифрования с явным указанием ключа
+    std::pair<std::string, std::string> decode_with_key(const std::string message, const std::string key) override {
+        // Запоминаем текущие значения ключа
+        int old_a = a;
+        int old_b = b;
+        
+        // Устанавливаем новый ключ
+        if (!set_key(key)) {
+            throw std::runtime_error("Ошибка: Неверный формат ключа для аффинного шифра.");
+        }
+        
+        // Дешифруем сообщение
+        std::string decrypted;
+        int aInv = modInverse(a, modSize);
+        
+        for (char c : message) {
+            int idx = getIndex(c);
+            if (idx != -1) {
+                int newIdx = (aInv * ((idx - b) % modSize + modSize)) % modSize;
+                decrypted += alphabet[newIdx];
+            } else {
+                decrypted += c;
+            }
+        }
+        
+        // Сохраняем использованный ключ в хранилище
+        KeyStorage::getInstance()->setAffineKey(key);
+        
+        // Возвращаем расшифрованное сообщение и использованный ключ
+        return {decrypted, key};
     }
 };
 
 #endif // AFFINE_CIPHER_H
-
-
-
-
-
-//#include "basic_cripto.h"
-//class affine_cipher : public basic_cripto {
-  //  private:
-  //      int a, b;
-  //      int modInverse(int a, int n) {
- //           for (int x = 1; x < n; ++x) {
-   //             if ((a * x) % n == 1)
-     //               return x;
-       //     }
-         //   return 1;
-       // }
-    
-   // public:
-     //   affine_cipher(int aKey = 5, int bKey = 7)
-       //     : a(aKey), b(bKey) {
-         //   if (std::gcd(a, 26) != 1) {
-           //     throw std::runtime_error("Папвметр 'a' должен быть 26.");
-           // }
-    //    }
-    
-      //  std::string encode(const std::string message) override {
-     //       std::string encrypted = message;
-       //     for (char& c : encrypted) {
-         //       if (isalpha(c)) {
-           //         char offset = isupper(c) ? 'A' : 'a';
-             //       c = (a * (c - offset) + b) % 26 + offset;
-               // }
-        //    }
-          //  return encrypted;
-       // }
-    
-        // std::string decode(const std::string encryptedMessage) override {
-        //    std::string decrypted = encryptedMessage;
-          //  int aInv = modInverse(a, 26);
-         //   for (char& c : decrypted) {
-           //     if (isalpha(c)) {
-             //       char offset = isupper(c) ? 'A' : 'a';
-               //     c = (aInv * ((c - offset - b + 26) % 26)) % 26 + offset;
-             //   }
-          //  }
-         //   return decrypted;
-       // }
-    
-      //  int getA() const {
-        //    return a;
-        // }
-    
- //       int getB() const {
-   //         return b;
-       
-     //   }
- //   }; 
-
-// int main(){
-   // affine_cipher a = affine_cipher();
-  //  std::cout << a.encode("asfg   sfdsd");
-// }
