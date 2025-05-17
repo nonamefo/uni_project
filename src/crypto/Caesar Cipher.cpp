@@ -1,3 +1,5 @@
+#include "../project_libs.hpp"
+
 #include "basic_cripto.h"
 
 
@@ -32,4 +34,4 @@ class caesar_cipher : public basic_cripto {
         int getShift() const {
             return shift;
         }
-    };
+};
