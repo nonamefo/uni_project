@@ -10,16 +10,16 @@ private:
     // Ключи для каждого шифровальщика
     std::string affine_key;
     std::string caesar_key;
-    std::string substitution_key;
-    std::string transposition_key;
+    std::string playfair_key;
+    std::string polybius_key;
     std::string vigenere_key;
     
     // Приватный конструктор (паттерн Singleton(это как я понял глобализация обьекта, что он ток один))
     KeyStorage() : 
         affine_key(""), 
         caesar_key(""),
-        substitution_key(""),
-        transposition_key(""),
+        playfair_key(""),
+        polybius_key(""),
         vigenere_key("") {}
         
 public:
@@ -39,13 +39,13 @@ public:
     void setCaesarKey(const std::string& key) { caesar_key = key; }
     std::string getCaesarKey() const { return caesar_key; }
     
-    //Работа с ключом шифра замены
-    void setSubstitutionKey(const std::string& key) { substitution_key = key; }
-    std::string getSubstitutionKey() const { return substitution_key; }
+    //Работа с ключом шифра Плэйфера
+    void setPlayfairKey(const std::string& key) { playfair_key = key; }
+    std::string getPlayfairKey() const { return playfair_key; }
     
-    // Работа с ключом шифра перестановки
-    void setTranspositionKey(const std::string& key) { transposition_key = key; }
-    std::string getTranspositionKey() const { return transposition_key; }
+    // Работа с ключом шифра Полибиуса
+    void setPolybiusKey(const std::string& key) { polybius_key = key; }
+    std::string getPolybiusKey() const { return polybius_key; }
     
     // Работа с ключом шифра Виженера
     void setVigenereKey(const std::string& key) { vigenere_key = key; }
@@ -55,8 +55,8 @@ public:
     void resetAllKeys() {
         affine_key = "";
         caesar_key = "";
-        substitution_key = "";
-        transposition_key = "";
+        playfair_key = "";
+        polybius_key = "";
         vigenere_key = "";
     }
     
