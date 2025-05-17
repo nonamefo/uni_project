@@ -46,9 +46,9 @@ json::json(std::string f_name){
         std::regex rep(",");
         text_from_file = std::regex_replace(text_from_file, rep, " ");
 
-        char text_splited[text_from_file.length()];
-
-        strcpy(text_splited, text_from_file.c_str());
+        // Используем вектор вместо массива фиксированной длины
+        std::vector<char> text_splited(text_from_file.length() + 1);
+        std::strcpy(text_splited.data(), text_from_file.c_str());
 
         // создание словоря со всеми id и названием
         // переменные которые используються для создания словаря
@@ -56,7 +56,7 @@ json::json(std::string f_name){
         std::string value;
         bool flag = 1;
 
-        for(int i = 0; i < text_from_file.length(); i++){
+        for(size_t i = 0; i < text_from_file.length(); i++){
             // проверка на пробел
             if (text_splited[i] != ' '){
                 // проверка на изменение значения с ключа на значение 
@@ -96,6 +96,7 @@ json::json(std::string f_name){
     }
     in.close();
 }
+
 void json::Parse(std::string f_name){
     // открытие файла
     std::ifstream in(f_name);
@@ -120,9 +121,9 @@ void json::Parse(std::string f_name){
         std::regex rep(",");
         text_from_file = std::regex_replace(text_from_file, rep, " ");
 
-        char text_splited[text_from_file.length()];
-
-        strcpy(text_splited, text_from_file.c_str());
+        // Используем вектор вместо массива фиксированной длины
+        std::vector<char> text_splited(text_from_file.length() + 1);
+        std::strcpy(text_splited.data(), text_from_file.c_str());
 
         // создание словоря со всеми id и названием
         // переменные которые используються для создания словаря
@@ -130,7 +131,7 @@ void json::Parse(std::string f_name){
         std::string value;
         bool flag = 1;
 
-        for(int i = 0; i < text_from_file.length(); i++){
+        for(size_t i = 0; i < text_from_file.length(); i++){
             // проверка на пробел
             if (text_splited[i] != ' '){
                 // проверка на изменение значения с ключа на значение 
