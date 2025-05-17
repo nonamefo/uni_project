@@ -106,5 +106,143 @@ class polybius_cipher : public basic_cripto {
                 for (int i = 0; i < square_size && !found; i++) {
                     for (int j = 0; j < square_size && !found; j++) {
                         if (square[i][j] == c) {
-                            // Используем двузначные числа для каждой координаты
-                            encrypted += std::to_string
+                                                       // Используем двузначные числа для каждой координаты
+                            encrypted += std::to_string(i + 1).length() == 1 ? "0" + std::to_string(i + 1) : std::to_string(i + 1);
+                            encrypted += std::to_string(j + 1).length() == 1 ? "0" + std::to_string(j + 1) : std::to_string(j + 1);
+                            encrypted += " ";
+                            found = true;
+                        }
+                    }
+                }
+                
+                // Если символ не найден в квадрате, пропускаем его
+                if (!found) {
+                    encrypted += "?? ";
+                }
+            }
+            
+            // Сохраняем ключ в хранилище
+            KeyStorage::getInstance()->setPolybiusKey(get_key());
+            
+            return encrypted;
+        }
+        
+        std::string decode(const std::string message) override {
+            // Проверяем наличие ключа в хранилище
+            std::string stored_key = KeyStorage::getInstance()->getPolybiusKey();
+            if (stored_key.empty()) {
+                throw std::runtime_error("Ошибка: Отсутствует ключ для шифра Полибия. Расшифровка невозможна.");
+            }
+            
+            // Устанавливаем ключ из хранилища
+            if (!set_key(stored_key)) {
+                throw std::runtime_error("Ошибка: Неверный формат ключа для шифра Полибия.");
+            }
+            
+            std::string decrypted;
+            std::string current_coords;
+            
+            for (char c : message) {
+                if (isdigit(c)) {
+                    current_coords += c;
+                    
+                    // Когда накопили 4 цифры (две координаты по 2 цифры каждая)
+                    if (current_coords.length() == 4) {
+                        int row = std::stoi(current_coords.substr(0, 2)) - 1;
+                        int col = std::stoi(current_coords.substr(2, 2)) - 1;
+                        
+                        if (row >= 0 && row < square_size && col >= 0 && col < square_size) {
+                            decrypted += square[row][col];
+                        } else {
+                            decrypted += '?'; // Если координаты вне допустимого диапазона
+                        }
+                        
+                        current_coords.clear();
+                    }
+                } else if (c == ' ' || c == '\t' || c == '\n') {
+                    // Игнорируем разделители
+                    continue;
+                } else if (c == '?') {
+                    // Для неизвестных символов (парных вопросительных знаков)
+                    if (current_coords == "?") {
+                        decrypted += '?';
+                        current_coords.clear();
+                    } else {
+                        current_coords += c;
+                    }
+                } else {
+                    // Сбрасываем накопленные координаты при любых других символах
+                    current_coords.clear();
+                }
+            }
+            
+            return decrypted;
+        }
+        
+        // Метод шифрования с явным указанием ключа
+        std::pair<std::string, std::string> encode_with_key(const std::string message) override {
+            // Сохраняем текущий ключ перед шифрованием
+            std::string current_key = get_key();
+            
+            // Шифруем сообщение
+            std::string encrypted = encode(message);
+            
+            return {encrypted, current_key};
+        }
+        
+        // Метод дешифрования с явным указанием ключа
+        std::pair<std::string, std::string> decode_with_key(const std::string message, const std::string key_str) override {
+            // Запоминаем текущий ключ
+            std::string old_keyword = keyword;
+            
+            // Устанавливаем новый ключ
+            if (!set_key(key_str)) {
+                throw std::runtime_error("Ошибка: Неверный формат ключа для шифра Полибия.");
+            }
+            
+            // Дешифруем сообщение
+            std::string decrypted;
+            std::string current_coords;
+            
+            for (char c : message) {
+                if (isdigit(c)) {
+                    current_coords += c;
+                    
+                    // Когда накопили 4 цифры (две координаты по 2 цифры каждая)
+                    if (current_coords.length() == 4) {
+                        int row = std::stoi(current_coords.substr(0, 2)) - 1;
+                        int col = std::stoi(current_coords.substr(2, 2)) - 1;
+                        
+                        if (row >= 0 && row < square_size && col >= 0 && col < square_size) {
+                            decrypted += square[row][col];
+                        } else {
+                            decrypted += '?'; // Если координаты вне допустимого диапазона
+                        }
+                        
+                        current_coords.clear();
+                    }
+                } else if (c == ' ' || c == '\t' || c == '\n') {
+                    // Игнорируем разделители
+                    continue;
+                } else if (c == '?') {
+                    // Для неизвестных символов (парных вопросительных знаков)
+                    if (current_coords == "?") {
+                        decrypted += '?';
+                        current_coords.clear();
+                    } else {
+                        current_coords += c;
+                    }
+                } else {
+                    // Сбрасываем накопленные координаты при любых других символах
+                    current_coords.clear();
+                }
+            }
+            
+            // Сохраняем использованный ключ в хранилище
+            KeyStorage::getInstance()->setPolybiusKey(key_str);
+            
+            return {decrypted, key_str};
+        }
+};
+
+#endif // POLYBIUS_CIPHER_H
