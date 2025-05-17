@@ -6,6 +6,9 @@
 #include <algorithm>
 #include <memory>
 #include <cctype>
+#include <cmath>
+#include <random>
+
 
 #include <filesystem>
 
