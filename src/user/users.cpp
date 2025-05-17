@@ -64,6 +64,7 @@ void act_user::analis(){
         switch(info[0]){
             // метод шифрования Аффины
             case '1':
+            {
                 // инициализация класса шифрования Аффины
                 basic_cripto* affine = new affine_cipher();
 
@@ -102,7 +103,51 @@ void act_user::analis(){
                 }
                 //  отчистка памяти от класса 
                 delete affine;
+                break;
+            }
+            case '2':
+            {
+                basic_cripto* playfir = new playfair("KEYWORD");
+                msg = "1 - зашифровать тект\n"
+                      "2 - расшифровать текст\n";
 
+                send_message(msg, 2);
+                this->linux_base_terminal();
+
+                info = get_info();
+
+                if (info[0] == '1'){
+                    // получение текста для зашифрования 
+                    msg = "введите текст:";
+                    send_message(msg, 2);
+
+                    info = get_info();
+
+                    msg = "зашифрованный текст:";
+                    send_message(msg, 2);
+
+                    msg = playfir->encode(info);
+                    send_message(msg + "\n", 2);
+                }
+                if (info[0] == '2'){
+                    msg = "введите зашифрованный текст:";
+                    send_message(msg, 2);
+
+                    info = get_info();
+
+                    msg = "Расшифрованный текст:";
+                    send_message(msg, 2);
+
+                    msg = playfir->decode(info);
+                    send_message(msg + "\n", 2);
+                }
+                //  отчистка памяти от класса 
+
+                
+
+                delete playfir;
+                break;
+            }
 
         }
     }

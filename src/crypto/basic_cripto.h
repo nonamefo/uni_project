@@ -1,4 +1,4 @@
-#ifndef BASIC_CRIPTO_H // Уникальное имя, обычно имя файла заглавными буквами с подчеркиваниями
+#ifndef BASIC_CRIPTO_H // Уникальное имя
 #define BASIC_CRIPTO_H
 
 class basic_cripto{

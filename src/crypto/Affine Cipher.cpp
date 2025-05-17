@@ -51,7 +51,7 @@ class affine_cipher : public basic_cripto {
         }
     }; 
 
-int main(){
-    affine_cipher a = affine_cipher();
-    std::cout << a.encode("asfg   sfdsd");
-}
+// int main(){
+//     affine_cipher a = affine_cipher();
+//     std::cout << a.encode("asfg   sfdsd");
+// }

@@ -14,9 +14,12 @@ class super_act_user{
 
         void linux_base_terminal();
 
+        void get_zero_choise();
+
         bool flag_crypt_or_encrypt = false; 
 
     private:
+
         std::string login;
         std::string username;
         std::string password;
@@ -38,6 +41,8 @@ super_act_user::super_act_user(){
 
     this->send_message(message, 1);
 };
+
+
 
 
 super_act_user::super_act_user(std::string message){
@@ -75,4 +80,8 @@ void super_act_user::linux_base_terminal(){
 
     std::cout << "┌──(user@user)-[" << dir << "]" << std::endl;
     std::cout << "└─$";
+}
+
+void super_act_user::get_zero_choise(){
+    this->flag_crypt_or_encrypt = false;
 }
