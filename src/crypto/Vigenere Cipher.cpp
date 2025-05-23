@@ -3,7 +3,7 @@
 
 #include "../project_libs.hpp"
 #include "basic_cripto.h"
-#include "key_storage.h"
+#include "key_storage.cpp"
 
 class vigenere_cipher : public basic_cripto {
 private:

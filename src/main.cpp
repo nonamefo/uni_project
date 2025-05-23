@@ -1,4 +1,4 @@
-#include "user/users.cpp"
+#include "user/linux_users.cpp"
 
 int main(){
     
@@ -18,20 +18,22 @@ int main(){
                             "#################################################################\n"
                             "                                                                 \n";
     std::string get_login, get_password, get_username;
-
-    act_user user = act_user(hello_msg);
+    // todoo
+    #ifdef _WIN32
+    #endif
+    linux_act_user user = linuxact_user(hello_msg);
     user.analis();
 }
 
 
-// int main() {
-//     basic_cripto playfair = new playfair("KEYWORD");
-//     std::string message = "HELLO WORLD";
-//     std::string encrypted = cipher.encode(message);
-//     std::string decrypted = cipher.decode(encrypted);
-//     std::cout << "Original: " << message << std::endl;
-//     std::cout << "Encrypted: " << encrypted << std::endl;
-//     std::cout << "Decrypted: " << decrypted << std::endl;
-//     std::cout << "Key: " << cipher.getKey() << std::endl;
-//     std::cout << "Matrix: " << cipher.getMatrica() << std::endl;
-// }
+int main() {
+    basic_cripto playfair = new playfair("KEYWORD");
+    std::string message = "HELLO WORLD";
+    std::string encrypted = cipher.encode(message);
+    std::string decrypted = cipher.decode(encrypted);
+    std::cout << "Original: " << message << std::endl;
+    std::cout << "Encrypted: " << encrypted << std::endl;
+    std::cout << "Decrypted: " << decrypted << std::endl;
+    std::cout << "Key: " << cipher.getKey() << std::endl;
+    std::cout << "Matrix: " << cipher.getMatrica() << std::endl;
+}
