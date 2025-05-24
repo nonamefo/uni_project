@@ -1,18 +1,23 @@
-<<<<<<< HEAD
-#ifndef BASIC_CRIPTO_H // Уникальное имя
-=======
 #ifndef BASIC_CRIPTO_H 
->>>>>>> e554c1fb06d8f389e8c170c7c8cbb30fa77544e0
 #define BASIC_CRIPTO_H
 
-class basic_cripto{
-    public:
+#include <string>
+
+class basic_cripto {
+public:
+    virtual ~basic_cripto() = default; // Добавьте виртуальный деструктор
+
+    // Основные методы
     virtual std::string decode(const std::string message) = 0;
     virtual std::string encode(const std::string message) = 0;
 
+    // Методы для работы с ключами
+    virtual std::string get_key() const = 0;  // Добавлен const
+    virtual bool set_key(const std::string& key) = 0;
+
+    // Методы с возвратом пары (результат + ключ)
     virtual std::pair<std::string, std::string> encode_with_key(const std::string message) = 0;
     virtual std::pair<std::string, std::string> decode_with_key(const std::string message, const std::string key) = 0;
 };
-
 
 #endif // BASIC_CRIPTO_H
