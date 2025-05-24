@@ -1,5 +1,6 @@
 // #include "user/basic_user.h" 
-#include "user/linux_base_user.h" 
+#include "user/linux_base_user.h"
+#include "user/win_base_user.h" 
 
 // TODO
 // #include "user/win_base_user.h"
@@ -29,6 +30,8 @@ int main() {
     // add win
     #ifdef __linux__
         basic_user* user = new linux_base_user();
+    #elif _WIN32
+        basic_user* user = new win_base_user();
     #else 
         basic_user* user = new basic_user();
     #endif
