@@ -2,6 +2,8 @@
 #define BASIC_USER
 
 #include "../project_libs.h"
+#include "../crypto/basic_cripto.h"
+
 
 class basic_user{
     public:
@@ -12,7 +14,8 @@ class basic_user{
         void give_choise(std::string);
         char choise;
         std::string get_curent_dir();
+        void decode_encode(basic_cripto*, std::string);
+        void choise_out_of_range();
 };
-
 
 #endif

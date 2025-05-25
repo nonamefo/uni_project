@@ -7,7 +7,6 @@
 #include "../basic_user.h"
 
 
-
 void basic_user::analis(){
     std::string msg;
     
@@ -26,29 +25,14 @@ void basic_user::analis(){
             give_choise(msg);
 
             msg = 
-                "1 - зашифровать"
+                "1 - зашифровать\n"
                 "2 - расшифровать";
 
             switch(choise){
                 case '1': {
                     basic_cripto* affine = new affine_cipher();
 
-                    give_choise(msg);
-                    
-                    if (choise == '1'){
-                        msg = "введите текст для зашифрования: ";
-                        send_message(msg, 1);
-
-                        std::cin >> msg;
-                        std::cout << affine->encode(msg) << std::endl;
-                    }
-                    else if (choise == '2'){
-                        msg = "введите текст для расшифровки: ";
-                        send_message(msg, 1);
-                        
-                        std::cin >> msg;
-                        std::cout << affine->decode(msg) << std::endl;
-                    }
+                    decode_encode(affine, msg);
 
                     delete affine;
                     break;
@@ -56,45 +40,15 @@ void basic_user::analis(){
                 case '2': {
                     basic_cripto* caesar = new caesar_cipher(7);
 
-                    give_choise(msg);
+                    decode_encode(caesar, msg);
                     
-                    if (choise == '1'){
-                        msg = "введите текст для зашифрования: ";
-                        send_message(msg, 1);
-
-                        std::cin >> msg;
-                        std::cout << caesar->encode(msg) << std::endl;
-                    }
-                    else if (choise == '2'){
-                        msg = "введите текст для расшифровки: ";
-                        send_message(msg, 1);
-                        
-                        std::cin >> msg;
-                        std::cout << caesar->decode(msg) << std::endl;
-                    }
-
                     delete caesar;
                     break;
                 }
                 case '3': {
                     basic_cripto* playfair = new playfair_cipher("KEYWORD");
 
-                    give_choise(msg);
-                    
-                    if (choise == '1'){
-                        msg = "введите текст для зашифрования: ";
-                        send_message(msg, 1);
-
-                        std::cin >> msg;
-                        std::cout << playfair->encode(msg) << std::endl;
-                    }
-                    else if (choise == '2'){
-                        msg = "введите текст для расшифровки: ";
-                        send_message(msg, 1);
-                        
-                        std::cin >> msg;
-                        std::cout << playfair->decode(msg) << std::endl;
-                    }
+                    decode_encode(playfair, msg);
 
                     delete playfair;
                     break;
@@ -102,22 +56,7 @@ void basic_user::analis(){
                 case '4': {
                     basic_cripto* polybius = new polybius_cipher("KEYWORD");
 
-                    give_choise(msg);
-                    
-                    if (choise == '1'){
-                        msg = "введите текст для зашифрования: ";
-                        send_message(msg, 1);
-
-                        std::cin >> msg;
-                        std::cout << polybius->encode(msg) << std::endl;
-                    }
-                    else if (choise == '2'){
-                        msg = "введите текст для расшифровки: ";
-                        send_message(msg, 1);
-                        
-                        std::cin >> msg;
-                        std::cout << polybius->decode(msg) << std::endl;
-                    }
+                    decode_encode(polybius, msg);
 
                     delete polybius;
                     break;
@@ -125,34 +64,52 @@ void basic_user::analis(){
                 case '5': {
                     basic_cripto* vigenere = new vigenere_cipher("KEYWORD");
 
-                    give_choise(msg);
-                    
-                    if (choise == '1'){
-                        msg = "введите текст для зашифрования: ";
-                        send_message(msg, 1);
-
-                        std::cin >> msg;
-                        std::cout << vigenere->encode(msg) << std::endl;
-                    }
-                    else if (choise == '2'){
-                        msg = "введите текст для расшифровки: ";
-                        send_message(msg, 1);
-                        
-                        std::cin >> msg;
-                        std::cout << vigenere->decode(msg) << std::endl;
-                    }
+                    decode_encode(vigenere, msg);
 
                     delete vigenere;
                     break;
                 }
+                default:
+                    choise_out_of_range();
             }
         }
         else if(choise == '2'){
             return;
         }
+        else{
+            choise_out_of_range();
+        }
     }
-
 };
+
+
+void basic_user::choise_out_of_range(){
+    send_message("\nДанного значения нету в выборе\n", 2);
+}
+
+
+void basic_user::decode_encode(basic_cripto* crypto, std::string msg = ""){
+    give_choise(msg);
+    
+    if (choise == '1'){
+        msg = "введите текст для зашифрования: ";
+        send_message(msg, 1);
+
+        std::cin >> msg;
+        std::cout << crypto->encode(msg) << std::endl;
+    }
+    else if (choise == '2'){
+        msg = "введите текст для расшифровки: ";
+        send_message(msg, 1);
+        
+        std::cin >> msg;
+        std::cout << crypto->decode(msg) << std::endl;
+    }
+    else{
+        choise_out_of_range();
+    }
+};
+
 
 std::string basic_user::get_info(){
     std::string msg;

@@ -1,9 +1,7 @@
-// #include "user/basic_user.h" 
+#include "user/basic_user.h" 
 #include "user/linux_base_user.h"
 #include "user/win_base_user.h" 
 
-// TODO
-// #include "user/win_base_user.h"
 
 
 
@@ -11,10 +9,10 @@
 
 int main() {
 
-#ifdef _WIN32
-    SetConsoleCP(CP_UTF8);
-    SetConsoleOutputCP(CP_UTF8);
-#endif
+    #ifdef _WIN32
+        SetConsoleCP(CP_UTF8);
+        SetConsoleOutputCP(CP_UTF8);
+    #endif
 
     std::string hello_msg = "#################################################################\n"
                             "#                                                               #\n"
