@@ -5,13 +5,9 @@
 #include "../Polybius_Cipher.h"
 
 void polybius_cipher::generateSquare() {
-    // Определяем полный алфавит
-    full_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-                    "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-                    "0123456789 ,.;:!?-_\"'()[]{}";
     
     // Вычисляем размер квадрата (ближайший квадрат, который вместит весь алфавит)
-    square_size = std::ceil(std::sqrt(full_alphabet.size()));
+    square_size = std::ceil(std::sqrt(alphabet.size()));
     
     // Создаем квадратную матрицу нужного размера
     square = std::vector<std::vector<char>>(square_size, std::vector<char>(square_size, ' '));
@@ -20,7 +16,7 @@ void polybius_cipher::generateSquare() {
     std::string alphabet = keyword;
     
     // Добавляем оставшиеся символы из полного алфавита
-    for (char c : full_alphabet) {
+    for (char c : alphabet) {
         alphabet += c;
     }
     

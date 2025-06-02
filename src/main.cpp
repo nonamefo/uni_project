@@ -1,14 +1,15 @@
 #include "user/basic_user.h" 
 #include "user/linux_base_user.h"
-#include "user/win_base_user.h" 
+#include "user/win_base_user.h"
 
+#include <locale>
 
 
 
 
 
 int main() {
-
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     #ifdef _WIN32
         SetConsoleCP(CP_UTF8);
         SetConsoleOutputCP(CP_UTF8);

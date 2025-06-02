@@ -16,9 +16,7 @@ int caesar_cipher::getIndex(char c) {
 
 caesar_cipher::caesar_cipher(int shift_value) {
     // Алфавит включает английские и русские буквы, а также основные символы
-    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-                "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-                "0123456789 ,.;:!?-_\"'()[]{}";
+
     
     // Генерируем случайный сдвиг, если не предоставлен
     if (shift_value == -1) {

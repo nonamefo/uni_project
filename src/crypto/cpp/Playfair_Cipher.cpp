@@ -9,12 +9,10 @@
 
 void playfair_cipher::generateMatrix() {
     // Определяем полный алфавит
-    full_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-                    "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-                    "0123456789 ,.;:!?-_\"'()[]{}";
+
     
     // Вычисляем размер матрицы (ближайший квадрат, который вместит весь алфавит)
-    matrix_size = std::ceil(std::sqrt(full_alphabet.size()));
+    matrix_size = std::ceil(std::sqrt(alphabet.size()));
     
     // Создаем квадратную матрицу нужного размера
     matrix = std::vector<std::vector<char>>(matrix_size, std::vector<char>(matrix_size, ' '));
@@ -23,7 +21,7 @@ void playfair_cipher::generateMatrix() {
     std::string alphabet = key;
     
     // Добавляем оставшиеся символы из полного алфавита
-    for (char c : full_alphabet) {
+    for (char c : alphabet) {
         alphabet += c;
     }
     

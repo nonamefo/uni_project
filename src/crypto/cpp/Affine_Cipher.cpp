@@ -21,9 +21,7 @@ int affine_cipher::getIndex(char c) {
 
 // Конструктор без значений по умолчанию
 affine_cipher::affine_cipher(int a_value, int b_value) {
-    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-               "0123456789 ,.;:!?-_\"'()[]{}";
+    
     
     modSize = alphabet.size();
 

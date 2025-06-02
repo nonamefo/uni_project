@@ -34,10 +34,7 @@ std::string vigenere_cipher::generateRandomKeyword(int length) {
 };
 
 vigenere_cipher::vigenere_cipher(const std::string& key) {
-    // Алфавит включает английские и русские буквы, а также основные символы
-    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-                "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-                "0123456789 ,.;:!?-_\"'()[]{}";
+    
     
     // Если ключ не предоставлен, генерируем случайное ключевое слово
     if (key.empty()) {

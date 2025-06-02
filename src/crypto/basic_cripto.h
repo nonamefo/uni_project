@@ -11,6 +11,10 @@ public:
     virtual std::string decode(const std::string message) = 0;
     virtual std::string encode(const std::string message) = 0;
 
+    const std::string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+               "0123456789 ,.;:!?-_\"'()[]{}";;
+
     // Методы для работы с ключами
     virtual std::string get_key() const = 0;  // Добавлен const
     virtual bool set_key(const std::string& key) = 0;

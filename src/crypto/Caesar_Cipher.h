@@ -9,7 +9,7 @@
 class caesar_cipher : public basic_cripto {
 private:
     int shift;
-    std::string alphabet;
+    
     int getIndex(char c);
 
 public:

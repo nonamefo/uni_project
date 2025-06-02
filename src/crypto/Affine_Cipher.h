@@ -11,7 +11,7 @@ private:
     int a;
     int b;
     int modSize;
-    std::string alphabet;
+    
     int modInverse(int a, int m);
     int getIndex(char c);
 

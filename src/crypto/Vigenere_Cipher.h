@@ -10,7 +10,7 @@
 class vigenere_cipher : public basic_cripto {
 private:
     std::string keyword;
-    std::string alphabet;
+    
     
     bool isInAlphabet(char c) const;
     int getIndex(char c) const;
